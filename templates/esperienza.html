@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Esperienza Utente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/aggiunte.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-5">Indica la tua esperienza per gli argomenti selezionati</h1>
+        <form method="GET" action="{{ url_for('salva_esperienza') }}">
+            {% for argomento in argomenti %}
+            <div class="form-group row">
+
+                <label class="col-sm-3 col-form-label"><h3>{{ argomento }}</h3></label>
+                <div class="col-sm-9">
+                    <input type="range" class="form-control-range" min="1" max="10" step="1" name="{{ argomento }}" id="{{ argomento }}" required>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group row">
+                <div class="text-center my-5">
+                    <button type="submit" class="btn btn-primary btn-block">Invia</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+</html>

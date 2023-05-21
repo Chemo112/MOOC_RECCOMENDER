@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raccomandazioni</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-5">Confirm that you choose the following topics:</h1>
+        <form action="{{ url_for('static',filename='templates/esperienza.html') }}" method="POST">
+        {% if argomenti|length >0 %}
+
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            {% for argomento in argomenti %}
+                                <li class="list-group-item"><h2>{{ argomento }}</h2></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+
+            <p class="text-center my-5">Sorry, seems that you didn't choose any topic</p>
+        {% endif %}
+        <div class="text-center mt-4">
+            <a href="{{ url_for('home', filename='templates/selezione2.html') }}" class="btn btn-primary">Go back to topics selection</a>
+        </div>
+        <div class="text-center mt-5">
+             <a href="{{ url_for('esperienza', argomenti=argomenti, esp=True) }}" class="btn btn-primary">Next</a>
+        </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+</html>
