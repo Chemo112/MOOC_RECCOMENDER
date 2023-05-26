@@ -170,7 +170,7 @@ def save_experience():
     if user_exists:
         #prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         #che col tempo incroceremo per creare in vero collaborative filtering
-        session['experience'] = user_exists[0]
+        #session['experience'] = user_exists[0]
         return redirect(url_for('show_courses'))
 
     for sbj in data.keys():
