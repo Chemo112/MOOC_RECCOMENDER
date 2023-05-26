@@ -158,6 +158,9 @@ def esperienza():
             return render_template('summary.html', argomenti=argomenti)
 
 
+experience = dict()
+
+
 @login_required
 @app.route('/save_experience', methods=['GET'])
 def save_experience():
@@ -171,12 +174,12 @@ def save_experience():
     tmpDict = dict()
     if user_exp:
         for topic, value in vars(user_exp).items():
-            print(topic, value)
-            tmpDict[topic] = value
+            tmpDict[argomenti[topic[-1]]] = value
 
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
-        return redirect(url_for('show_courses', experience=tmpDict))
+        session['experience'] = tmpDict
+        return redirect(url_for('show_courses'))
     else:
         print("TODO")##da implementare il confronto tra le varie confiugurazioni configurazioni
 
@@ -218,7 +221,13 @@ def save_experience():
 
     db.session.add(new_pref)
     db.session.commit()
-    return redirect(url_for('show_courses', experience=topics))
+    subject_exp = dict()
+
+    for i in range(len(topics)):
+        subject_exp[argomenti[i]] = topics[i]
+
+    session['experience'] = topics
+    return redirect(url_for('show_courses'))
 
 #render_template('finale.html')
 
@@ -229,10 +238,10 @@ def reccomender(subjects_exp):
     res = dict()
     for sbj in subjects_exp:
         if subjects_exp[sbj] > 0:
-            if subjects_exp[sbj] % 3 <=1:
+            if subjects_exp[sbj] // 3 <=1:
                 diff = "Introductory"
             else:
-                if subjects_exp[sbj] % 3 <=2:
+                if subjects_exp[sbj] // 3 <=2:
                     diff = "Intermediate"
                 else:
                     diff = "Advanced"
@@ -247,9 +256,9 @@ def reccomender(subjects_exp):
 
 
 @login_required
-@app.route('show_courses', methods=['GET'])
-def show_courses(experience):
-    courses = reccomender(experience)
+@app.route('/show_courses', methods=['GET'])
+def show_courses():
+    courses = reccomender(session['experience'])
     user_courses = {}
     for subject, courses_df in courses.items():
         selected_courses = courses_df
