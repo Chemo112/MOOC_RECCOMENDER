@@ -48,7 +48,7 @@ class User(db.Model, UserMixin):
 
 
 class user_experiences(db.Model):
-    id = db.Column(db.Serial, primary_key=False)
+    id = db.Column(db.Integer, primary_key=False)
     topic1 = db.Column(db.Integer, nullable=False)
     topic2 = db.Column(db.Integer, nullable=False)
     topic3 = db.Column(db.Integer, nullable=False)
