@@ -17,16 +17,22 @@ conn = psycopg2.connect(
     user=db_user,
     password=db_password
 )
+'''
 argomenti = ["Programming and software development", "Business and management",
              "Data science and artificial intelligence", "Engineering and technology", "Art and design",
              "Social sciences", "Languages and literature", "Mathematics and statistics", "Health sciences",
              "Physical and natural sciences"]
+'''
+import pandas as pd
+DB = pd.read_csv("edx_courses.csv")
+argomenti = [row for row in DB['subject']]
+
+
 
 app = Flask(__name__)
 
 app.secret_key = '000999'
-app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
@@ -53,6 +59,28 @@ class User_preferences(db.Model):
     topic8 = db.Column(db.Integer, nullable=True)
     topic9 = db.Column(db.Integer, nullable=True)
     topic10 = db.Column(db.Integer, nullable=True)
+    topic11 = db.Column(db.Integer, nullable=True)
+    topic12 = db.Column(db.Integer, nullable=True)
+    topic13 = db.Column(db.Integer, nullable=True)
+    topic14 = db.Column(db.Integer, nullable=True)
+    topic15 = db.Column(db.Integer, nullable=True)
+    topic16 = db.Column(db.Integer, nullable=True)
+    topic17 = db.Column(db.Integer, nullable=True)
+    topic18 = db.Column(db.Integer, nullable=True)
+    topic19 = db.Column(db.Integer, nullable=True)
+    topic20 = db.Column(db.Integer, nullable=True)
+    topic21 = db.Column(db.Integer, nullable=True)
+    topic22 = db.Column(db.Integer, nullable=True)
+    topic23 = db.Column(db.Integer, nullable=True)
+    topic24 = db.Column(db.Integer, nullable=True)
+    topic25 = db.Column(db.Integer, nullable=True)
+    topic26 = db.Column(db.Integer, nullable=True)
+    topic27 = db.Column(db.Integer, nullable=True)
+    topic28 = db.Column(db.Integer, nullable=True)
+    topic29 = db.Column(db.Integer, nullable=True)
+    topic30 = db.Column(db.Integer, nullable=True)
+    topic31 = db.Column(db.Integer, nullable=True)
+
     username = db.Column(db.String(50), unique=True)
 
 
@@ -101,39 +129,38 @@ def register():
 
 @app.route('/index', methods=['GET', 'POST'])
 def home():
-    selezionati = []
+    selected_topics= []
     if request.method == 'POST':
         # se l'utente ha selezionato degli argomenti, crea una lista di argomenti selezionati
-        selezionati = request.form.getlist('argomenti')
-        return render_template('raccomandazioni2.html', argomenti=selezionati)
+        selected_topics = request.form.getlist('argomenti')
+        return render_template('summary.html', argomenti=selected_topics)
     else:
-        return render_template('selezione2.html', argomenti=argomenti)
+        return render_template('selection.html', argomenti=argomenti)
 
 
 @login_required
-@app.route('/esperienza', methods=['GET', 'POST'])
+@app.route('/experience', methods=['GET', 'POST'])
 def esperienza():
     argomenti = request.args.getlist('argomenti')
     if request.method == 'POST':
         # Gestisci i dati del form in modo appropriato
         # return redirect(url_for('raccomandazioni2', argomenti=argomenti))
-        return render_template('esperienza.html', argomenti=argomenti)
+        return render_template('experience.html', argomenti=argomenti)
 
     elif request.method == 'GET':
         if request.args.get('esp'):
-            # Se esp è True, indirizza l'utente alla pagina esperienza.html
-            return render_template('esperienza.html', argomenti=argomenti)
+            # Se esp è True, indirizza l'utente alla pagina experience.html
+            return render_template('experience.html', argomenti=argomenti)
         else:
-            # Altrimenti, indirizza l'utente alla pagina raccomandazioni.html
-            return render_template('raccomandazioni2.html', argomenti=argomenti)
+            # Altrimenti, indirizza l'utente alla pagina summary.html
+            return render_template('summary.html', argomenti=argomenti)
 
 
 @login_required
-@app.route('/salva-esperienza', methods=['GET'])
-def salva_esperienza():
+@app.route('/save_experience', methods=['GET'])
+def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-
     max_id = db.session.query(db.func.max(User_preferences.id)).scalar()
 
     user_exists = User_preferences.query.filter_by(username=session['username']).first()
@@ -143,7 +170,8 @@ def salva_esperienza():
 
     for key in data.keys():
         topics[argomenti.index(key)] = int(data[key])
-        new_pref = User_preferences(id=max_id + 1, topic1=topics[0],
+        new_pref = User_preferences(id=max_id + 1,
+                                    topic1=topics[0],
                                     topic2=topics[1],
                                     topic3=topics[2],
                                     topic4=topics[3],
@@ -153,14 +181,77 @@ def salva_esperienza():
                                     topic8=topics[7],
                                     topic9=topics[8],
                                     topic10=topics[9],
+                                    topic11=topics[10],
+                                    topic12=topics[11],
+                                    topic13=topics[12],
+                                    topic14=topics[13],
+                                    topic15=topics[14],
+                                    topic16=topics[15],
+                                    topic17=topics[16],
+                                    topic18=topics[17],
+                                    topic19=topics[18],
+                                    topic20=topics[19],
+                                    topic21=topics[20],
+                                    topic22=topics[21],
+                                    topic23=topics[22],
+                                    topic24=topics[23],
+                                    topic25=topics[24],
+                                    topic26=topics[25],
+                                    topic27=topics[26],
+                                    topic28=topics[27],
+                                    topic29=topics[28],
+                                    topic30=topics[29],
+                                    topic31=topics[30],
                                     username=session['username'])
+
     db.session.add(new_pref)
     db.session.commit()
+    session['experience'] = topics
 
-    return render_template('finale.html')
+
+    return redirect(url_for('show_courses'))
+#render_template('finale.html')
 
 
-import os
+
+def reccomender(subjects_exp):
+    dict_sbj = dict()
+    res = dict()
+    for sbj in subjects_exp:
+        if subjects_exp[sbj] > 0:
+            if subjects_exp[sbj] % 3 <=1:
+                diff = "Introductory"
+            else:
+                if subjects_exp[sbj] % 3 <=2:
+                    diff = "Intermediate"
+                else:
+                    diff = "Advanced"
+            dict_sbj[sbj] = diff
+    for sbj in dict_sbj:
+        df = DB.loc[DB['subject'] == sbj]
+        df1 = df.loc[df['Level'] == dict_sbj[sbj]]
+        res[sbj] = df1
+    return res
+
+
+
+
+@login_required
+@app.route('/show_courses', methods=['GET'])
+def show_courses():
+    courses = reccomender(session['experience'])
+    user_courses = {}
+    for subject, courses_df in courses.items():
+        selected_courses = courses_df  # Esempio: tutti i corsi per l'argomento (subject)
+        user_courses[subject] = selected_courses
+
+    return render_template('show_courses.html', user_courses=user_courses)
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=os.getenv("PORT", default=5000))

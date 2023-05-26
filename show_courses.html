@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Corsi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/aggiunte.css') }}">
+
+</head>
+<body>
+    <h1>Corsi</h1>
+
+    {% for subject, courses in user_courses.items() %}
+    <h2>{{ subject }}</h2>
+    <ul>
+        {% for index, course in courses.iterrows() %}
+        <li>
+            <form action="{{ course['course_url'] }}">
+                <div class="text-center my-5">
+                    <h3>{{ course['title'] }}</h3> <h3>{{ course['institution'] }}</h3>
+                    <p>{{ course['summary'] }}</p>
+                    <p>{{ course['Level'] }}</p>
+                    <input type="submit" value="Go to the Course" class="btn btn-primary btn-block"/>
+                </div>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</body>
+</html>
