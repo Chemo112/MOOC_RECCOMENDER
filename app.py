@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
         return True
 
 
-class user_experiences(db.Model):
+class User_experiences(db.Model):
     id = db.Column(db.Integer, primary_key=False)
     topic1 = db.Column(db.Integer, nullable=False)
     topic2 = db.Column(db.Integer, nullable=False)
@@ -162,17 +162,17 @@ def esperienza():
 def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-    max_id = db.session.query(db.func.max(user_experiences.id)).scalar()
-    user_id = user_experiences.query.filter_by(username=session['username']).with_entities(user_experiences.id).scalar()
+    max_id = db.session.query(db.func.max(User_experiences.id)).scalar()
+    user_id = User_experiences.query.filter_by(username=session['username']).with_entities(User_experiences.id).scalar()
 
-    user_exists = user_experiences.query.filter_by(username=session['username']).first()
+    user_exists = User_experiences.query.filter_by(username=session['username']).first()
 
     if user_exists:
         return render_template('finale.html')
 
     for key in data.keys():
         topics[argomenti.index(key)] = int(data[key])
-        new_pref = user_experiences(id=session["id"] + 1,
+        new_pref = User_experiences(id=session["id"] + 1,
                                     topic1=topics[0],
                                     topic2=topics[1],
                                     topic3=topics[2],
