@@ -171,17 +171,41 @@ def save_experience():
 
     user_exp = session.query(User_experience).filter(User_experience.id == session['id']).first()
     #user_exp = session.query(User_experience).get(session['id'])
-
-    tmpDict = dict()
     if user_exp:
-        diz = vars(user_exp)
-        tmplist = diz.keys()
-        for el in sorted(tmplist):
-            print(el, "-----------------------------------------------------.............")
-            i = int(el.strip("topic"))
-            tmpDict[argomenti[i]] = diz[el]
+        tmpDict = dict()
 
 
+        tmpDict[argomenti[0]] = user_exp.topic1
+        tmpDict[argomenti[1]] = user_exp.topic2
+        tmpDict[argomenti[2]] = user_exp.topic3
+        tmpDict[argomenti[3]] = user_exp.topic4
+        tmpDict[argomenti[4]] = user_exp.topic5
+        tmpDict[argomenti[5]] = user_exp.topic6
+        tmpDict[argomenti[6]] = user_exp.topic7
+        tmpDict[argomenti[7]] = user_exp.topic8
+        tmpDict[argomenti[8]] = user_exp.topic9
+        tmpDict[argomenti[9]] = user_exp.topic10
+        tmpDict[argomenti[10]] = user_exp.topic11
+        tmpDict[argomenti[11]] = user_exp.topic12
+        tmpDict[argomenti[12]] = user_exp.topic13
+        tmpDict[argomenti[13]] = user_exp.topic14
+        tmpDict[argomenti[14]] = user_exp.topic15
+        tmpDict[argomenti[15]] = user_exp.topic16
+        tmpDict[argomenti[16]] = user_exp.topic17
+        tmpDict[argomenti[17]] = user_exp.topic18
+        tmpDict[argomenti[18]] = user_exp.topic19
+        tmpDict[argomenti[19]] = user_exp.topic20
+        tmpDict[argomenti[20]] = user_exp.topic21
+        tmpDict[argomenti[21]] = user_exp.topic22
+        tmpDict[argomenti[22]] = user_exp.topic23
+        tmpDict[argomenti[23]] = user_exp.topic24
+        tmpDict[argomenti[24]] = user_exp.topic25
+        tmpDict[argomenti[25]] = user_exp.topic26
+        tmpDict[argomenti[26]] = user_exp.topic27
+        tmpDict[argomenti[27]] = user_exp.topic28
+        tmpDict[argomenti[28]] = user_exp.topic29
+        tmpDict[argomenti[29]] = user_exp.topic30
+        tmpDict[argomenti[30]] = user_exp.topic31
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
         session['experience'] = tmpDict
