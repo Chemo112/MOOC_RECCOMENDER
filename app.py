@@ -163,10 +163,10 @@ def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
     #max_id = db.session.query(db.func.max(User_experiences.id)).scalar()
-
-    user_exists = User_experiences.query.filter_by(username=session['username']).first()
     user = User.query.filter_by(username=session['username']).first()
     session['id'] = user.id
+    user_exists = User_experiences.query.filter_by(id=session['id']).first()
+
     if user_exists:
         return render_template('finale.html')
 
