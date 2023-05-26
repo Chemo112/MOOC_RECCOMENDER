@@ -158,7 +158,6 @@ def esperienza():
             return render_template('summary.html', argomenti=argomenti)
 
 
-experience = dict()
 
 
 @login_required
@@ -173,8 +172,13 @@ def save_experience():
     user_exp = User_experience.query.filter_by(id=session['id']).first()
     tmpDict = dict()
     if user_exp:
-        for topic, value in vars(user_exp).items():
-            tmpDict[argomenti[int(topic.replace("topic",""))]] = value
+
+        diz = vars(user_exp).copy()
+        tmplist = diz.keys()
+        for el in sorted(tmplist):
+            i = int(el.strip("topic"))
+            tmpDict[argomenti[i]] = diz[el]
+
 
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
