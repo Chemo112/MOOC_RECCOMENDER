@@ -25,8 +25,8 @@ argomenti = ["Programming and software development", "Business and management",
 '''
 import pandas as pd
 DB = pd.read_csv("edx_courses.csv")
-argomenti = [row for row in DB['subject']]
-
+lista = [row for row in DB['subject']]
+argomenti = sorted(list(set(lista)))
 
 
 app = Flask(__name__)
