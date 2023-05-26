@@ -47,41 +47,41 @@ class User(db.Model, UserMixin):
         return True
 
 
-class User_preferences(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    topic1 = db.Column(db.Integer, nullable=True)
-    topic2 = db.Column(db.Integer, nullable=True)
-    topic3 = db.Column(db.Integer, nullable=True)
-    topic4 = db.Column(db.Integer, nullable=True)
-    topic5 = db.Column(db.Integer, nullable=True)
-    topic6 = db.Column(db.Integer, nullable=True)
-    topic7 = db.Column(db.Integer, nullable=True)
-    topic8 = db.Column(db.Integer, nullable=True)
-    topic9 = db.Column(db.Integer, nullable=True)
-    topic10 = db.Column(db.Integer, nullable=True)
-    topic11 = db.Column(db.Integer, nullable=True)
-    topic12 = db.Column(db.Integer, nullable=True)
-    topic13 = db.Column(db.Integer, nullable=True)
-    topic14 = db.Column(db.Integer, nullable=True)
-    topic15 = db.Column(db.Integer, nullable=True)
-    topic16 = db.Column(db.Integer, nullable=True)
-    topic17 = db.Column(db.Integer, nullable=True)
-    topic18 = db.Column(db.Integer, nullable=True)
-    topic19 = db.Column(db.Integer, nullable=True)
-    topic20 = db.Column(db.Integer, nullable=True)
-    topic21 = db.Column(db.Integer, nullable=True)
-    topic22 = db.Column(db.Integer, nullable=True)
-    topic23 = db.Column(db.Integer, nullable=True)
-    topic24 = db.Column(db.Integer, nullable=True)
-    topic25 = db.Column(db.Integer, nullable=True)
-    topic26 = db.Column(db.Integer, nullable=True)
-    topic27 = db.Column(db.Integer, nullable=True)
-    topic28 = db.Column(db.Integer, nullable=True)
-    topic29 = db.Column(db.Integer, nullable=True)
-    topic30 = db.Column(db.Integer, nullable=True)
-    topic31 = db.Column(db.Integer, nullable=True)
+class user_experiences(db.Model):
+    id = db.Column(db.Serial, primary_key=False)
+    topic1 = db.Column(db.Integer, nullable=False)
+    topic2 = db.Column(db.Integer, nullable=False)
+    topic3 = db.Column(db.Integer, nullable=False)
+    topic4 = db.Column(db.Integer, nullable=False)
+    topic5 = db.Column(db.Integer, nullable=False)
+    topic6 = db.Column(db.Integer, nullable=False)
+    topic7 = db.Column(db.Integer, nullable=False)
+    topic8 = db.Column(db.Integer, nullable=False)
+    topic9 = db.Column(db.Integer, nullable=False)
+    topic10 = db.Column(db.Integer, nullable=False)
+    topic11 = db.Column(db.Integer, nullable=False)
+    topic12 = db.Column(db.Integer, nullable=False)
+    topic13 = db.Column(db.Integer, nullable=False)
+    topic14 = db.Column(db.Integer, nullable=False)
+    topic15 = db.Column(db.Integer, nullable=False)
+    topic16 = db.Column(db.Integer, nullable=False)
+    topic17 = db.Column(db.Integer, nullable=False)
+    topic18 = db.Column(db.Integer, nullable=False)
+    topic19 = db.Column(db.Integer, nullable=False)
+    topic20 = db.Column(db.Integer, nullable=False)
+    topic21 = db.Column(db.Integer, nullable=False)
+    topic22 = db.Column(db.Integer, nullable=False)
+    topic23 = db.Column(db.Integer, nullable=False)
+    topic24 = db.Column(db.Integer, nullable=False)
+    topic25 = db.Column(db.Integer, nullable=False)
+    topic26 = db.Column(db.Integer, nullable=False)
+    topic27 = db.Column(db.Integer, nullable=False)
+    topic28 = db.Column(db.Integer, nullable=False)
+    topic29 = db.Column(db.Integer, nullable=False)
+    topic30 = db.Column(db.Integer, nullable=False)
+    topic31 = db.Column(db.Integer, nullable=False)
 
-    username = db.Column(db.String(50), unique=True)
+    #username = db.Column(db.String(50), unique=True)
 
 
 @login_manager.user_loader
@@ -94,6 +94,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         session['username'] = username
+
         password = request.form['password']
 
         user = User.query.filter_by(username=username).first()
@@ -161,16 +162,17 @@ def esperienza():
 def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-    max_id = db.session.query(db.func.max(User_preferences.id)).scalar()
+    max_id = db.session.query(db.func.max(user_experiences.id)).scalar()
+    user_id = user_experiences.query.filter_by(username=session['username']).with_entities(user_experiences.id).scalar()
 
-    user_exists = User_preferences.query.filter_by(username=session['username']).first()
+    user_exists = user_experiences.query.filter_by(username=session['username']).first()
 
     if user_exists:
         return render_template('finale.html')
 
     for key in data.keys():
         topics[argomenti.index(key)] = int(data[key])
-        new_pref = User_preferences(id=max_id + 1,
+        new_pref = user_experiences(id=session["id"] + 1,
                                     topic1=topics[0],
                                     topic2=topics[1],
                                     topic3=topics[2],
@@ -201,8 +203,8 @@ def save_experience():
                                     topic28=topics[27],
                                     topic29=topics[28],
                                     topic30=topics[29],
-                                    topic31=topics[30],
-                                    username=session['username'])
+                                    topic31=topics[30])
+
 
     db.session.add(new_pref)
     db.session.commit()
