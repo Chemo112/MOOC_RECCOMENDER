@@ -174,10 +174,9 @@ def save_experience():
             print(topic, value)
             tmpDict[topic] = value
 
-        session['experience'] = tmpDict
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
-        return redirect(url_for('show_courses'))
+        return redirect(url_for('show_courses', experience=tmpDict))
     else:
         print("TODO")##da implementare il confronto tra le varie confiugurazioni configurazioni
 
@@ -219,8 +218,7 @@ def save_experience():
 
     db.session.add(new_pref)
     db.session.commit()
-    session['experience'] = topics
-    return redirect(url_for('show_courses'))
+    return redirect(url_for('show_courses', experience=topics))
 
 #render_template('finale.html')
 
@@ -250,8 +248,8 @@ def reccomender(subjects_exp):
 
 @login_required
 @app.route('/show_courses', methods=['GET'])
-def show_courses():
-    courses = reccomender(session['experience'])
+def show_courses(experience):
+    courses = reccomender(experience)
     user_courses = {}
     for subject, courses_df in courses.items():
         selected_courses = courses_df
