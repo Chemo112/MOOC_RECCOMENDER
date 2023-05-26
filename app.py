@@ -176,6 +176,7 @@ def save_experience():
         diz = vars(user_exp).copy()
         tmplist = diz.keys()
         for el in sorted(tmplist):
+            print(el, "-----------------------------------------------------.............")
             i = int(el.strip("topic"))
             tmpDict[argomenti[i]] = diz[el]
 
