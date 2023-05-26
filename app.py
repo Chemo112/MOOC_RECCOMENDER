@@ -247,7 +247,7 @@ def reccomender(subjects_exp):
 
 
 @login_required
-@app.route('/show_courses', methods=['GET'])
+@app.route('show_courses', methods=['GET'])
 def show_courses(experience):
     courses = reccomender(experience)
     user_courses = {}
