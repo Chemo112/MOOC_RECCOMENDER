@@ -48,7 +48,7 @@ class User(db.Model, UserMixin):
 
 
 class User_experiences(db.Model):
-    id = db.Column(db.Integer, primary_key=False)
+    id = db.Column(db.Integer, primary_key=True)
     topic1 = db.Column(db.Integer, nullable=False)
     topic2 = db.Column(db.Integer, nullable=False)
     topic3 = db.Column(db.Integer, nullable=False)
@@ -172,7 +172,7 @@ def save_experience():
 
     for key in data.keys():
         topics[argomenti.index(key)] = int(data[key])
-        new_pref = User_experiences(id=session["id"] + 1,
+        new_pref = User_experiences(id=session["id"],
                                     topic1=topics[0],
                                     topic2=topics[1],
                                     topic3=topics[2],
