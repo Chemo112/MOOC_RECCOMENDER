@@ -82,8 +82,7 @@ class User_experience(db.Model):
     topic31 = db.Column(db.Integer, nullable=False)
 
 
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 
 @login_manager.user_loader
@@ -164,12 +163,10 @@ def esperienza():
 def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-    #max_id = db.session.query(db.func.max(User_experiences.id)).scalar()
-
     user = User.query.filter_by(username=session['username']).first()
     session['id'] = user.id
     user_exp = User_experience.query.filter_by(id=session['id']).all()
-    user_exp = user_exp.as_dict()
+    user_exp = user_exp[0]
     if user_exp:
         #prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         #che col tempo incroceremo per creare in vero collaborative filtering
