@@ -174,7 +174,7 @@ def save_experience():
     tmpDict = dict()
     if user_exp:
         for topic, value in vars(user_exp).items():
-            tmpDict[argomenti[int(topic[-1])]] = value
+            tmpDict[argomenti[int(topic.replace("topic",""))]] = value
 
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
