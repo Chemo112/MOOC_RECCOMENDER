@@ -168,10 +168,11 @@ def save_experience():
     user_exists = User_experience.query.filter_by(id=session['id']).first()
 
     if user_exists:
-        return render_template('finale.html')
+        session['experience'] = user_exists
+        return redirect(url_for('show_courses'))
 
-    for key in data.keys():
-        topics[argomenti.index(key)] = int(data[key])
+    for sbj in data.keys():
+        topics[argomenti.index(sbj)] = int(data[sbj])
         new_pref = User_experience(id=user.id,
                                     topic1=topics[0],
                                     topic2=topics[1],
@@ -209,9 +210,8 @@ def save_experience():
     db.session.add(new_pref)
     db.session.commit()
     session['experience'] = topics
-
-
     return redirect(url_for('show_courses'))
+
 #render_template('finale.html')
 
 
