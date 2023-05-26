@@ -165,10 +165,12 @@ def save_experience():
     #max_id = db.session.query(db.func.max(User_experiences.id)).scalar()
     user = User.query.filter_by(username=session['username']).first()
     session['id'] = user.id
-    user_exists = User_experience.query.filter_by(id=session['id']).first()
+    user_exists = User_experience.query.filter_by(id=session['id']).all()
 
     if user_exists:
-        session['experience'] = user_exists
+        #prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
+        #che col tempo incroceremo per creare in vero collaborative filtering
+        session['experience'] = user_exists[0]
         return redirect(url_for('show_courses'))
 
     for sbj in data.keys():
