@@ -166,7 +166,7 @@ def save_experience():
     user = User.query.filter_by(username=session['username']).first()
     session['id'] = user.id
     user_exp = User_experience.query.filter_by(id=session['id']).all()
-    user_exp = user_exp[0]
+    user_exp = dict(user_exp[0])
     if user_exp:
         #prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         #che col tempo incroceremo per creare in vero collaborative filtering
