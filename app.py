@@ -165,15 +165,16 @@ def esperienza():
 def save_experience():
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-    user = User.query.filter_by(username=session['username']).first()
+    user = session.query(User).filter(User.username == session['username']).first()
     session['id'] = user.id
    # user_exp = User_experience.query.filter_by(id=session['id']).all()
 
-    user_exp = User_experience.query.filter_by(id=session['id']).first()
+    user_exp = session.query(User_experience).filter(User_experience.id == session['id']).first()
+    #user_exp = session.query(User_experience).get(session['id'])
+
     tmpDict = dict()
     if user_exp:
-
-        diz = vars(user_exp).copy()
+        diz = vars(user_exp)
         tmplist = diz.keys()
         for el in sorted(tmplist):
             print(el, "-----------------------------------------------------.............")
