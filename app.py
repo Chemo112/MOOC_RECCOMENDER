@@ -165,14 +165,21 @@ def save_experience():
     topics = [0 for _ in argomenti]
     user = User.query.filter_by(username=session['username']).first()
     session['id'] = user.id
-    user_exp = User_experience.query.filter_by(id=session['id']).all()
-    print(user_exp)
+   # user_exp = User_experience.query.filter_by(id=session['id']).all()
 
+    user_exp = User_experience.query.filter_by(id=session['id']).first()
+    tmpDict = dict()
     if user_exp:
-        #prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
-        #che col tempo incroceremo per creare in vero collaborative filtering
-        session['experience'] = user_exp.items()
+        for topic, value in vars(user_exp).items():
+            print(topic, value)
+            tmpDict[topic] = value
+
+        session['experience'] = tmpDict
+        # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
+        # che col tempo incroceremo per creare in vero collaborative filtering
         return redirect(url_for('show_courses'))
+    else:
+        print("TODO")##da implementare il confronto tra le varie confiugurazioni configurazioni
 
     for sbj in data.keys():
         topics[argomenti.index(sbj)] = int(data[sbj])
