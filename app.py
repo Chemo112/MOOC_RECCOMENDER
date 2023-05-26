@@ -242,7 +242,7 @@ def show_courses():
     courses = reccomender(session['experience'])
     user_courses = {}
     for subject, courses_df in courses.items():
-        selected_courses = courses_df  # Esempio: tutti i corsi per l'argomento (subject)
+        selected_courses = courses_df
         user_courses[subject] = selected_courses
 
     return render_template('show_courses.html', user_courses=user_courses)
