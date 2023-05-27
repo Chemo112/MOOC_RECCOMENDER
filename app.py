@@ -33,6 +33,8 @@ app = Flask(__name__)
 
 app.secret_key = '000999'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
+
+
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
@@ -163,13 +165,15 @@ def esperienza():
 @login_required
 @app.route('/save_experience', methods=['GET'])
 def save_experience():
+    Session = db.session()
+
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
-    user = session.query(User).filter(User.username == session['username']).first()
+    user = Session.query(User).filter(User.username == session['username']).first()
     session['id'] = user.id
    # user_exp = User_experience.query.filter_by(id=session['id']).all()
 
-    user_exp = session.query(User_experience).filter(User_experience.id == session['id']).first()
+    user_exp = Session.query(User_experience).filter(User_experience.id == session['id']).first()
     #user_exp = session.query(User_experience).get(session['id'])
     if user_exp:
         tmpDict = dict()
