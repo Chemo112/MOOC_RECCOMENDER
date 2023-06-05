@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/aggiunte.css') }}">
 
+    <style>
+        .course-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <h1>Corsi</h1>
@@ -15,8 +21,9 @@
         {% for index, course in courses.iterrows() %}
         <li>
             <form action="{{ course['course_url'] }}">
-                <div class="text-center my-5">
-                    <h3>{{ course['title'] }}</h3> <h3>{{ course['institution'] }}</h3>
+                <div class="course-container text-center my-5">
+                    <h3>{{ course['title'] }}</h3>
+                    <h3>{{ course['institution'] }}</h3>
                     <p>{{ course['summary'] }}</p>
                     <p>{{ course['Level'] }}</p>
                     <input type="submit" value="Go to the Course" class="btn btn-primary btn-block"/>
@@ -28,3 +35,4 @@
     {% endfor %}
 </body>
 </html>
+

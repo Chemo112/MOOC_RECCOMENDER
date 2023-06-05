@@ -89,7 +89,8 @@ class User_experience(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    #return User.query.get(int(user_id))
+    return db.session.query(User).get(user_id)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -100,7 +101,9 @@ def login():
 
         password = request.form['password']
 
-        user = User.query.filter_by(username=username).first()
+        #user = User.query.filter_by(username=username).first()
+        user = db.session.query(User).filter(User.username == session['username']).first()
+
         if user and password == user.password:
             login_user(user)
             return redirect(url_for('home'))
@@ -116,7 +119,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        user = User.query.filter_by(username=username).first()
+        #user = User.query.filter_by(username=username).first()
+        user = db.session.query(User).filter(User.username == session['username']).first()
 
         if user:
             return 'Username already exists', render_template('login.html')
@@ -177,8 +181,6 @@ def save_experience():
     #user_exp = session.query(User_experience).get(session['id'])
     if user_exp:
         tmpDict = dict()
-
-
         tmpDict[argomenti[0]] = user_exp.topic1
         tmpDict[argomenti[1]] = user_exp.topic2
         tmpDict[argomenti[2]] = user_exp.topic3
