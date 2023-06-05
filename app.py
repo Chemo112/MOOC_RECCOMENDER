@@ -90,7 +90,7 @@ class User_experience(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     #return User.query.get(int(user_id))
-    return db.session.query(User).get(user_id)
+    return db.session.get(user_id)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -262,7 +262,7 @@ def save_experience():
     for i in range(len(topics)):
         subject_exp[argomenti[i]] = topics[i]
 
-    session['experience'] = topics
+    session['experience'] = subject_exp
     return redirect(url_for('show_courses'))
 
 #render_template('finale.html')
