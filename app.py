@@ -304,7 +304,19 @@ def show_courses():
     return render_template('show_courses.html', user_courses=user_courses)
 
 
+########################################################################################
+'''
+csv_file = 'path/to/your/csv_file.csv'
+dataframe = pd.read_csv(csv_file)
 
+table_name = 'your_table_name'
+dataframe.to_sql(table_name, connection, if_exists='replace', index=False)
+or if_exists='append' if I want to append the rows in the table and not replacing the old table with the new one
+
+
+
+
+'''
 
 
 
