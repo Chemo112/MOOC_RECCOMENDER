@@ -3,6 +3,7 @@ import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 import os
+import bcrypt
 
 db_host = os.environ.get('PGHOST')
 db_port = os.environ.get('PGPORT')
@@ -102,8 +103,9 @@ def login():
         password = request.form['password']
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
-
-        if user and password == user.password:
+        password = password.encode('utf-8')
+        hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
+        if user and hashedPassword == user.password:
             login_user(user)
             return redirect(url_for('home'))
         else:
@@ -117,8 +119,7 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        me = User(username, password)
-        print(me)
+
 
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
@@ -126,7 +127,9 @@ def register():
         if user:
             return 'Username already exists', render_template('login.html')
         else:
-            new_user = User(username=username, password=password)
+            password = password.encode('utf-8')
+            hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
+            new_user = User(username=username, password=hashedPassword)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
@@ -138,7 +141,7 @@ def register():
 
 @app.route('/index', methods=['GET', 'POST'])
 def home():
-    selected_topics= []
+    selected_topics = []
     if request.method == 'POST':
         # se l'utente ha selezionato degli argomenti, crea una lista di argomenti selezionati
         selected_topics = request.form.getlist('argomenti')
@@ -153,7 +156,6 @@ def esperienza():
     argomenti = request.args.getlist('argomenti')
     if request.method == 'POST':
         # Gestisci i dati del form in modo appropriato
-        # return redirect(url_for('raccomandazioni2', argomenti=argomenti))
         return render_template('experience.html', argomenti=argomenti)
 
     elif request.method == 'GET':
@@ -171,15 +173,12 @@ def esperienza():
 @app.route('/save_experience', methods=['GET'])
 def save_experience():
     Session = db.session()
-
     data = request.args.to_dict()
     topics = [0 for _ in argomenti]
     user = Session.query(User).filter(User.username == session['username']).first()
     session['id'] = user.id
-   # user_exp = User_experience.query.filter_by(id=session['id']).all()
-
     user_exp = Session.query(User_experience).filter(User_experience.id == session['id']).first()
-    #user_exp = session.query(User_experience).get(session['id'])
+
     if user_exp:
         tmpDict = dict()
         tmpDict[argomenti[0]] = user_exp.topic1
