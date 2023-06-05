@@ -298,7 +298,8 @@ def show_courses():
     user_courses = {}
     for subject, courses_df in courses.items():
         selected_courses = courses_df
-        user_courses[subject] = selected_courses
+        if len(selected_courses) > 0:
+            user_courses[subject] = selected_courses
 
     return render_template('show_courses.html', user_courses=user_courses)
 
