@@ -16,12 +16,12 @@
     <h1>Corsi</h1>
 
     {% for subject, courses in user_courses.items() %}
-    <h2>{{ subject }}</h2>
+    <p align="center"><h2>{{ subject }}</h2></p>
     <ul>
         {% for index, course in courses.iterrows() %}
         <li>
             <form action="{{ course['course_url'] }}">
-                <div class="course-container text-center my-5">
+                <div class="course-container">
                     <h3>{{ course['title'] }}</h3>
                     <h3>{{ course['institution'] }}</h3>
                     <p>{{ course['summary'] }}</p>
