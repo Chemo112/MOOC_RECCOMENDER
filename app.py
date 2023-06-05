@@ -100,7 +100,6 @@ def login():
         session['username'] = username
 
         password = request.form['password']
-
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
 
@@ -118,6 +117,8 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        me = User(username, password)
+        print(me)
 
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
@@ -284,6 +285,8 @@ def reccomender(subjects_exp):
             dict_sbj[sbj] = diff
     for sbj in dict_sbj:
         df = DB.loc[DB['subject'] == sbj]
+        df.fillna('Description is Missing', inplace=True)
+
         df1 = df.loc[df['Level'] == dict_sbj[sbj]]
         res[sbj] = df1
     return res
