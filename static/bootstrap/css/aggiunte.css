@@ -12,7 +12,10 @@ li {
   border-radius: 4px;
   text-align: center;
 }
-
+.course-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
 .form-check-label {
   padding:5px;
   font-size: 20px;
