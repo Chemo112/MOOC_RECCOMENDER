@@ -16,7 +16,7 @@
     <h1>Corsi</h1>
 
     {% for subject, courses in user_courses.items() %}
-    <p align="center"><h2>{{ subject }}</h2></p>
+    <h2 class="text-center my-5">{{ subject }}</h2>
     <ul>
         {% for index, course in courses.iterrows() %}
         <li>
