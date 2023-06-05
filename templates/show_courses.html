@@ -8,10 +8,9 @@
 
 </head>
 <body>
-    <h1>Corsi</h1>
 
     {% for subject, courses in user_courses.items() %}
-    <h2 class="text-center my-5">{{ subject }}</h2>
+    <h1 class="text-center my-5">{{ subject }}</h1>
     <ul>
         {% for index, course in courses.iterrows() %}
         <li>
