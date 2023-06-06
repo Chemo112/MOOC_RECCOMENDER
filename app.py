@@ -131,10 +131,6 @@ def register():
             return 'Username already exists', render_template('login.html')
         else:
             pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-
-         #   hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(10))
-
-
             new_user = User(username=username, password=pw_hash)
             db.session.add(new_user)
             db.session.commit()
