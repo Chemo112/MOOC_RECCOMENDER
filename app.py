@@ -306,7 +306,7 @@ def show_courses():
     return render_template('show_courses.html', user_courses=user_courses)
 
 
-########################################################################################
+#######################################################################################
 '''
 csv_file = 'path/to/your/csv_file.csv'
 dataframe = pd.read_csv(csv_file)
