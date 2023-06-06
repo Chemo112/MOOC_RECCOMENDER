@@ -38,7 +38,7 @@
         {% for subject, courses in user_courses.items() %}
         <h1 class="text-center my-5">{{ subject }}</h1>
 
-        <div class="row">
+        <div class="row justify-content-start">
             {% for index, course in courses.iterrows() %}
             <div class="col-md-4">
                 <form action="{{ course['course_url'] }}">
