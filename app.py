@@ -101,10 +101,11 @@ def login():
         password = request.form['password']
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
-        res = bcrypt.check_password_hash(user.password, password)
-        #password = password.encode('utf-8')
-        #print(password)
-        #hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(10))
+        try:
+            res = bcrypt.check_password_hash(user.password, password)
+        except Exception as e:
+            return 'Invalid username or password'
+            print(e)
 
         if user and res:
             print("sono entrato")
