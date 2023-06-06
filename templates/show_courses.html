@@ -15,8 +15,9 @@
     <ul>
         {% for index, course in courses.iterrows() %}
         <li>
-
+        <div class="block-container">
             <form action="{{ course['course_url'] }}">
+
                  <div class="course-container">
                     <h3>{{ course['title'] }}</h3>
                     <p>{{ course['institution'] }}</p>
@@ -26,7 +27,7 @@
                  </div>
 
             </form>
-
+        </div>
         </li>
         {% endfor %}
     </ul>
