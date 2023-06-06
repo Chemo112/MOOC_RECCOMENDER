@@ -101,6 +101,7 @@ def login():
         password = password.encode('utf-8')
         print(password)
         hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
+        print("forse")
         print(hashedPassword)
         if user and hashedPassword == user.password:
             print("sono entrato")
