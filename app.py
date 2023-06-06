@@ -18,12 +18,7 @@ conn = psycopg2.connect(
     user=db_user,
     password=db_password
 )
-'''
-argomenti = ["Programming and software development", "Business and management",
-             "Data science and artificial intelligence", "Engineering and technology", "Art and design",
-             "Social sciences", "Languages and literature", "Mathematics and statistics", "Health sciences",
-             "Physical and natural sciences"]
-'''
+
 import pandas as pd
 DB = pd.read_csv("edx_courses.csv")
 lista = [row for row in DB['subject']]
@@ -104,8 +99,11 @@ def login():
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
         password = password.encode('utf-8')
+        print(password)
         hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
+        print(hashedPassword)
         if user and hashedPassword == user.password:
+            print("sono entrato")
             login_user(user)
             return redirect(url_for('home'))
         else:
