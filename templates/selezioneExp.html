@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Seleziona gli argomenti</title>
+    <title>Selects the topics</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/aggiunte.css') }}">
 
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-5">Seleziona gli argomenti che ti interessano</h1>
+        <h1 class="text-center my-5">Select the topics of your interest</h1>
         <form method="post" action="{{ url_for('home') }}">
             <div class="row justify-content-center">
                 {% for argomento in argomenti %}
@@ -28,7 +28,7 @@
                 {% endfor %}
             </div>
             <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary">Invia</button>
+                <button type="submit" class="btn btn-primary">Send</button>
             </div>
         </form>
     </div>

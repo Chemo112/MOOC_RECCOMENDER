@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Corsi</title>
+    <title>Courses</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/show_courses.css') }}">
 
@@ -26,7 +26,8 @@
         }
 
         .row {
-            max-height: 300px;
+            margin-bottom: 10px;
+            max-height: 500px;
         }
 
     </style>
@@ -43,7 +44,7 @@
                 <form action="{{ course['course_url'] }}">
                     <div class="course-container">
                         <h3>{{ course['title'] }}</h3>
-                        <h4>{{ course['institution'] }}</h4>
+                        <p>{{ course['institution'] }}</p>
                         <p>{{ course['summary'] }}</p>
                         <p>{{ course['Level'] }}</p>
                         <input type="submit" value="Go to the Course" class="btn btn-primary btn-block"/>
