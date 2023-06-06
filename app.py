@@ -3,7 +3,7 @@ import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
 import os
-import bcrypt
+from flask_bcrypt import Bcrypt
 
 db_host = os.environ.get('PGHOST')
 db_port = os.environ.get('PGPORT')
@@ -19,13 +19,17 @@ conn = psycopg2.connect(
     password=db_password
 )
 
+app = Flask(__name__)
+bcrypt = Bcrypt(app)
+
+
 import pandas as pd
 DB = pd.read_csv("edx_courses.csv")
 lista = [row for row in DB['subject']]
 argomenti = sorted(list(set(lista)))
 
 
-app = Flask(__name__)
+
 
 app.secret_key = '000999'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
@@ -94,16 +98,15 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         session['username'] = username
-
         password = request.form['password']
         #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
-        password = password.encode('utf-8')
-        print(password)
-        hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
-        print("forse")
-        print(hashedPassword)
-        if user and hashedPassword == user.password:
+        res = bcrypt.check_password_hash(user.password, password)
+        #password = password.encode('utf-8')
+        #print(password)
+        #hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(10))
+
+        if user and res:
             print("sono entrato")
             login_user(user)
             return redirect(url_for('home'))
@@ -126,9 +129,12 @@ def register():
         if user:
             return 'Username already exists', render_template('login.html')
         else:
-            password = password.encode('utf-8')
-            hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(23))
-            new_user = User(username=username, password=hashedPassword)
+            pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+
+         #   hashedPassword = bcrypt.hashpw(password, bcrypt.gensalt(10))
+
+
+            new_user = User(username=username, password=pw_hash)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
