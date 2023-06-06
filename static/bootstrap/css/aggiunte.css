@@ -16,6 +16,7 @@ li {
 .course-container {
   max-width: 600px;
   margin: 0 auto;
+  align: center;
 }
 .form-check-label {
   padding:5px;
