@@ -16,11 +16,10 @@ li {
 .course-container {
   max-width: 300px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .block-container {
-  text-align: center;
+  align: center;
 }
 
 .form-check-label {
