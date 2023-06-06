@@ -14,9 +14,10 @@ li {
 }
 
 .course-container {
-  max-width: 600px;
+  width: 500px;
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 .form-check-label {
   padding:5px;
