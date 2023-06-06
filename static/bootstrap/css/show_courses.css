@@ -16,24 +16,20 @@ li {
   max-width: 300px;
 }
 
-
-
-
 .course-container {
   max-width: 300px;
   margin: 0 auto;
 }
+
 .form-check-label {
   padding:5px;
   font-size: 20px;
   text-align: center;
 
-
 }
 .form-check-inline {
   margin-right: 20px;
 }
-
 
 input[type=checkbox] {
     transform: scale(1.8);
