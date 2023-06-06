@@ -217,7 +217,7 @@ def save_experience():
         # prendiamo la prima configurazione di preferenze disponibile ma in futuro ne avremo più d'una per ogni utente
         # che col tempo incroceremo per creare in vero collaborative filtering
         session['experience'] = tmpDict
-        return redirect(url_for('show_courses'))
+        return redirect(url_for('show_courses_mod'))
     else:
         print("TODO")##da implementare il confronto tra le varie confiugurazioni configurazioni
 
@@ -265,7 +265,7 @@ def save_experience():
         subject_exp[argomenti[i]] = topics[i]
 
     session['experience'] = subject_exp
-    return redirect(url_for('show_courses'))
+    return redirect(url_for('show_courses_mod'))
 
 #render_template('finale.html')
 
@@ -305,7 +305,7 @@ def show_courses():
         if len(selected_courses) > 0:
             user_courses[subject] = selected_courses
 
-    return render_template('show_courses.html', user_courses=user_courses)
+    return render_template('show_courses_mod.html', user_courses=user_courses)
 
 
 #######################################################################################
