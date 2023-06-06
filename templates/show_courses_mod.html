@@ -12,7 +12,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 80%;
+            height: 100%;
         }
 
         .course-list {
@@ -24,6 +24,11 @@
         .course-item {
             flex-basis: 30%;
         }
+
+        .row {
+            max-width: 300px;
+        }
+
     </style>
 </head>
 <body>
@@ -38,7 +43,7 @@
                 <form action="{{ course['course_url'] }}">
                     <div class="course-container">
                         <h3>{{ course['title'] }}</h3>
-                        <h3>{{ course['institution'] }}</h3>
+                        <h4>{{ course['institution'] }}</h4>
                         <p>{{ course['summary'] }}</p>
                         <p>{{ course['Level'] }}</p>
                         <input type="submit" value="Go to the Course" class="btn btn-primary btn-block"/>
