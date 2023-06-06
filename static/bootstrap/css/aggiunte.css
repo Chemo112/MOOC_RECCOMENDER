@@ -8,6 +8,7 @@ ul {
 li {
     padding: 12px;
     margin: 10px;
+    margin-top: 5px;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -17,7 +18,7 @@ li {
 }
 
 .block-container {
-  align: center;
+  margin: 0 auto;
 }
 
 .form-check-label {
