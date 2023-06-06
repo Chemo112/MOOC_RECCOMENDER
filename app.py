@@ -120,9 +120,9 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-
+        session['username'] = username
         #user = User.query.filter_by(username=username).first()
-        user = db.session.query(User).filter(User.username == session['username']).first()
+        user = db.session.query(User).filter(User.username == username).first()
 
         if user:
             return 'Username already exists', render_template('login.html')
