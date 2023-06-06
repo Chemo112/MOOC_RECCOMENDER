@@ -305,7 +305,7 @@ def show_courses():
         if len(selected_courses) > 0:
             user_courses[subject] = selected_courses
 
-    return render_template('show_courses_mod.html', user_courses=user_courses)
+    return render_template('show_courses.html', user_courses=user_courses)
 
 
 #######################################################################################
