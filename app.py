@@ -99,7 +99,7 @@ def login():
         try:
             res = bcrypt.check_password_hash(user.password, password)
         except Exception as e:
-            return 'Invalid username or password', redirect(url_for('templates/login.html'))
+            return 'Invalid username or password', redirect(url_for('login'))
             print(e)
 
         if user and res:
@@ -107,7 +107,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            return 'Invalid username or password', redirect(url_for('templates/login.html'))
+            return 'Invalid username or password', redirect(url_for('login'))
     else:
         return render_template('login.html')
 
