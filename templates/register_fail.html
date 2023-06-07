@@ -80,22 +80,24 @@
 	</style>
 </head>
 <body>
-    <h1>Register</h1>
-    <form method="POST" action="{{ url_for('register') }}">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div class="text-center my-5">
-            <p>Username already exists</p>
-        </div>
-        <div>
-            <input type="submit" value="Register">
-        </div>
-    </form>
+    <div class="container">
+        <h1>Register</h1>
+        <form method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="text-center my-5">
+                <p>Username already exists</p>
+            </div>
+            <div>
+                <input type="submit" value="Register">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
