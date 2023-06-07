@@ -32,7 +32,7 @@ Example of how our databases are organized.
 
 This is the workflow of our system architecture.
 
-![](pipe.png)
+![](pipe2.png)
 
 
 ***INSTALL***
