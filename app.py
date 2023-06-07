@@ -22,15 +22,14 @@ conn = psycopg2.connect(
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-
 import pandas as pd
+
 DB = pd.read_csv("courses.csv")
 lista = [row for row in DB['subject']]
 argomenti = sorted(list(set(lista)))
 
 app.secret_key = '000999'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
-
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -81,9 +80,6 @@ class User_experience(db.Model):
     topic31 = db.Column(db.Integer, nullable=False)
 
 
-
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, user_id)
@@ -97,17 +93,17 @@ def login():
         password = request.form['password']
         user = db.session.query(User).filter(User.username == session['username']).first()
         try:
-            res = bcrypt.check_password_hash(user.password, password)
+            check = bcrypt.check_password_hash(user.password, password)
         except Exception as e:
-            return 'Invalid username or password', render_template('login.html')
+            return render_template('login.html')
             print(e)
 
-        if user and res:
+        if user and check:
             print("sono entrato")
             login_user(user)
             return redirect(url_for('home'))
         else:
-            return 'Invalid username or password', render_template('login.html')
+            return render_template('login.html')
     else:
         return render_template('login.html')
 
@@ -163,8 +159,6 @@ def esperienza():
             return render_template('summary.html', argomenti=argomenti)
 
 
-
-
 @login_required
 @app.route('/save_experience', methods=['GET'])
 def save_experience():
@@ -213,43 +207,42 @@ def save_experience():
         session['experience'] = tmpDict
         return redirect(url_for('show_courses'))
     else:
-        print("TODO") ##da implementare il confronto tra le varie confiugurazioni configurazioni
+        print("TODO")  ##da implementare il confronto tra le varie confiugurazioni configurazioni
 
     for sbj in data.keys():
         topics[argomenti.index(sbj)] = int(data[sbj])
         new_pref = User_experience(id=user.id,
-                                    topic1=topics[0],
-                                    topic2=topics[1],
-                                    topic3=topics[2],
-                                    topic4=topics[3],
-                                    topic5=topics[4],
-                                    topic6=topics[5],
-                                    topic7=topics[6],
-                                    topic8=topics[7],
-                                    topic9=topics[8],
-                                    topic10=topics[9],
-                                    topic11=topics[10],
-                                    topic12=topics[11],
-                                    topic13=topics[12],
-                                    topic14=topics[13],
-                                    topic15=topics[14],
-                                    topic16=topics[15],
-                                    topic17=topics[16],
-                                    topic18=topics[17],
-                                    topic19=topics[18],
-                                    topic20=topics[19],
-                                    topic21=topics[20],
-                                    topic22=topics[21],
-                                    topic23=topics[22],
-                                    topic24=topics[23],
-                                    topic25=topics[24],
-                                    topic26=topics[25],
-                                    topic27=topics[26],
-                                    topic28=topics[27],
-                                    topic29=topics[28],
-                                    topic30=topics[29],
-                                    topic31=topics[30])
-
+                                   topic1=topics[0],
+                                   topic2=topics[1],
+                                   topic3=topics[2],
+                                   topic4=topics[3],
+                                   topic5=topics[4],
+                                   topic6=topics[5],
+                                   topic7=topics[6],
+                                   topic8=topics[7],
+                                   topic9=topics[8],
+                                   topic10=topics[9],
+                                   topic11=topics[10],
+                                   topic12=topics[11],
+                                   topic13=topics[12],
+                                   topic14=topics[13],
+                                   topic15=topics[14],
+                                   topic16=topics[15],
+                                   topic17=topics[16],
+                                   topic18=topics[17],
+                                   topic19=topics[18],
+                                   topic20=topics[19],
+                                   topic21=topics[20],
+                                   topic22=topics[21],
+                                   topic23=topics[22],
+                                   topic24=topics[23],
+                                   topic25=topics[24],
+                                   topic26=topics[25],
+                                   topic27=topics[26],
+                                   topic28=topics[27],
+                                   topic29=topics[28],
+                                   topic30=topics[29],
+                                   topic31=topics[30])
 
     db.session.add(new_pref)
     db.session.commit()
@@ -262,17 +255,15 @@ def save_experience():
     return redirect(url_for('show_courses'))
 
 
-
-
 def reccomender(subjects_exp):
     dict_sbj = dict()
     res = dict()
     for sbj in subjects_exp:
         if subjects_exp[sbj] > 0:
-            if subjects_exp[sbj] // 3 <=1:
+            if subjects_exp[sbj] // 3 <= 1:
                 diff = "Introductory"
             else:
-                if subjects_exp[sbj] // 3 <=2:
+                if subjects_exp[sbj] // 3 <= 2:
                     diff = "Intermediate"
                 else:
                     diff = "Advanced"
@@ -286,8 +277,6 @@ def reccomender(subjects_exp):
     return res
 
 
-
-
 @login_required
 @app.route('/show_courses', methods=['GET'])
 def show_courses():
@@ -299,7 +288,6 @@ def show_courses():
             user_courses[subject] = selected_courses
 
     return render_template('show_courses.html', user_courses=user_courses)
-
 
 
 if __name__ == '__main__':
