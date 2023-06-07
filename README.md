@@ -4,13 +4,13 @@ The objective of this project is to develop an online platform that generates pe
 
 **Data**
 
-The data that we use for this project it is available here:<https://www.kaggle.com/datasets/edx/course-study>
+The data that we use for this project it is available here: <https://www.kaggle.com/datasets/edx/course-study>
 
 **Data collection organization of the storing part**
 
 Example of how our databases are organized. 
 
-
+![](tables.png)
 
 
 
@@ -32,7 +32,7 @@ Example of how our databases are organized.
 
 This is the workflow of our system architecture.
 
-
+![](pipe.png)
 
 
 ***INSTALL***
