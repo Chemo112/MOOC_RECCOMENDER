@@ -16,7 +16,7 @@ The objective of this project is to develop an online platform that generates pe
 
 **Data**
 
-The data that we use for this project it is available [here](https://www.kaggle.com/datasets/edx/course-study)
+The database of courses that we use for this project it is available [here](https://www.kaggle.com/datasets/edx/course-study)
 
 **Data collection organization of the storing part**
 
