@@ -63,6 +63,6 @@ The central implementation of the application resides within the "app.py" file. 
 
 The data of the courses is shown in the file “[courses.csv](https://github.com/Chemo112/MOOC_RECCOMENDER/blob/main/course.csv)”. Ideally this csv file is made after the scraping process but for time contingence we decided to use an already available dataset of courses, however, the system is already arranged to host the scraping algorithm that would pass the data directly to the data cleaner. In the data cleaner we make all the necessary computations in order to get the dataset ready for the recommendation system with the exact data that we need.
 
-[**Here a video of the working application:**](https://www.youtube.com/watch?v=8KDUsWiG1V8)
+[**Here a video of the working application**](https://www.youtube.com/watch?v=8KDUsWiG1V8)
 
 
