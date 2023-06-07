@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user, UserMixin
+from flask_login import LoginManager, login_user, login_required, UserMixin
 import os
 from flask_bcrypt import Bcrypt
 
@@ -24,14 +24,11 @@ bcrypt = Bcrypt(app)
 
 
 import pandas as pd
-DB = pd.read_csv("edx_courses.csv")
+DB = pd.read_csv("courses.csv")
 lista = [row for row in DB['subject']]
 argomenti = sorted(list(set(lista)))
 
 
-
-
-app.secret_key = '000999'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
 
 
@@ -89,7 +86,6 @@ class User_experience(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    #return User.query.get(int(user_id))
     return db.session.get(User, user_id)
 
 
@@ -99,7 +95,6 @@ def login():
         username = request.form['username']
         session['username'] = username
         password = request.form['password']
-        #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == session['username']).first()
         try:
             res = bcrypt.check_password_hash(user.password, password)
@@ -124,7 +119,6 @@ def register():
         password = request.form['password']
 
         session['username'] = username
-        #user = User.query.filter_by(username=username).first()
         user = db.session.query(User).filter(User.username == username).first()
 
         if user:
@@ -219,7 +213,7 @@ def save_experience():
         session['experience'] = tmpDict
         return redirect(url_for('show_courses'))
     else:
-        print("TODO")##da implementare il confronto tra le varie confiugurazioni configurazioni
+        print("TODO") ##da implementare il confronto tra le varie confiugurazioni configurazioni
 
     for sbj in data.keys():
         topics[argomenti.index(sbj)] = int(data[sbj])
@@ -267,7 +261,6 @@ def save_experience():
     session['experience'] = subject_exp
     return redirect(url_for('show_courses'))
 
-#render_template('finale.html')
 
 
 
@@ -308,22 +301,6 @@ def show_courses():
     return render_template('show_courses.html', user_courses=user_courses)
 
 
-#######################################################################################
-'''
-csv_file = 'path/to/your/csv_file.csv'
-dataframe = pd.read_csv(csv_file)
-
-table_name = 'your_table_name'
-dataframe.to_sql(table_name, connection, if_exists='replace', index=False)
-or if_exists='append' if I want to append the rows in the table and not replacing the old table with the new one
-
-
-
-
-'''
-
-
-
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=os.getenv("PORT", default=5000))
+    app.run(host="0.0.0.0", port=os.getenv("PORT", default=5000))
