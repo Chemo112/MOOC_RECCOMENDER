@@ -28,7 +28,7 @@ DB = pd.read_csv("courses.csv")
 lista = [row for row in DB['subject']]
 argomenti = sorted(list(set(lista)))
 
-
+app.secret_key('000999')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
 
 
