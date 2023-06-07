@@ -95,7 +95,7 @@ def login():
         try:
             check = bcrypt.check_password_hash(user.password, password)
         except Exception as e:
-            return render_template('login.html')
+            return render_template('login_fail.html')
             print(e)
 
         if user and check:
@@ -103,7 +103,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            return render_template('login.html')
+            return render_template('login_fail.html')
     else:
         return render_template('login.html')
 
@@ -118,7 +118,7 @@ def register():
         user = db.session.query(User).filter(User.username == username).first()
 
         if user:
-            return 'Username already exists'
+            return render_template('register_fail.html')
         else:
             pw_hash = bcrypt.generate_password_hash(password).decode('utf-8')
             new_user = User(username=username, password=pw_hash)
