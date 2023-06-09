@@ -10,7 +10,7 @@ db_port = os.environ.get('PGPORT')
 db_name = os.environ.get('PGDATABASE')
 db_user = os.environ.get('PGUSER')
 db_password = os.environ.get('PGPASSWORD')
-
+key = os.environ.get("FLASKKEY")
 conn = psycopg2.connect(
     host=db_host,
     port=db_port,
@@ -28,7 +28,7 @@ DB = pd.read_csv("courses.csv")
 lista = [row for row in DB['subject']]
 argomenti = sorted(list(set(lista)))
 
-app.secret_key = '000999'
+app.secret_key = str(key)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + db_user + ':' + db_password + '@' + db_host + ':' + db_port + '/' + db_name
 
 db = SQLAlchemy(app)
